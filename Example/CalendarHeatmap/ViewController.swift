@@ -60,14 +60,6 @@ class ViewController: UIViewController {
         ])
     }
     
-    private func gen() {
-    }
-    
-    private func readTitle() -> [String]? {
-        guard let url = Bundle.main.url(forResource: "title", withExtension: "plist") else { return nil }
-        return NSArray(contentsOf: url) as? [String]
-    }
-    
     private func readHeatmap() -> [String: Int]? {
         guard let url = Bundle.main.url(forResource: "heatmap", withExtension: "plist") else { return nil }
         return NSDictionary(contentsOf: url) as? [String: Int]
@@ -77,7 +69,10 @@ class ViewController: UIViewController {
 
 extension ViewController: CalendarHeatmapDelegate {
     func colorFor(dateComponents: DateComponents) -> UIColor {
-        let dateString = "\(dateComponents.year!).\(dateComponents.month!).\(dateComponents.day!)"
+        guard let year = dateComponents.year,
+            let month = dateComponents.month,
+            let day = dateComponents.day else { return .clear}
+        let dateString = "\(year).\(month).\(day)"
         return data[dateString] ?? UIColor(named: "color6")!
     }
 }
