@@ -104,7 +104,7 @@
 		607FACD21AFB9204008FA782 /* Example for CalendarHeatmap */ = {
 			isa = PBXGroup;
 			children = (
-				B694834C240E392B00931BC3 /* Resources */,
+				B694834C240E392B00931BC3 /* Data */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -159,12 +159,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B694834C240E392B00931BC3 /* Resources */ = {
+		B694834C240E392B00931BC3 /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				B694834E240E393E00931BC3 /* heatmap.plist */,
 			);
-			name = Resources;
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

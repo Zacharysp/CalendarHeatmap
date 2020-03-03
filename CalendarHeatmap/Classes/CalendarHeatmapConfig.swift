@@ -13,8 +13,6 @@ public struct CalendarHeatmapConfig {
     public var contentRightInset: CGFloat = 60
     
     // calendar day item
-    public var itemCornerRadius: CGFloat = 6
-    public var itemColor: UIColor = .clear
     public var itemSide: CGFloat = 20
     public var interitemSpacing: CGFloat = 4
     public var lineSpacing: CGFloat = 4

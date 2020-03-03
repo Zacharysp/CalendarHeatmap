@@ -57,7 +57,7 @@ open class CalendarHeatmap: UIView {
     
     open weak var delegate: CalendarHeatmapDelegate?
     
-    public init(config: CalendarHeatmapConfig, startDate: Date, endDate: Date = Date()) {
+    public init(config: CalendarHeatmapConfig = CalendarHeatmapConfig(), startDate: Date, endDate: Date = Date()) {
         self.config = config
         self.startDate = startDate
         self.endDate = endDate
