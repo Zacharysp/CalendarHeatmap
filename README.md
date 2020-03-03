@@ -22,7 +22,7 @@ pod 'CalendarHeatmap'
 
 ## Author
 
-Zacharysp, sp151018@gmail.com
+Zacharysp, dongjiezach@gmail.com
 
 ## License
 

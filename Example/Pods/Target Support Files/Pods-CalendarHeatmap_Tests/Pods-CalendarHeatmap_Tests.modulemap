@@ -1,0 +1,6 @@
+framework module Pods_CalendarHeatmap_Tests {
+  umbrella header "Pods-CalendarHeatmap_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

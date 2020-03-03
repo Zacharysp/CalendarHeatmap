@@ -1,0 +1,16 @@
+PODS:
+  - CalendarHeatmap (0.1.0)
+
+DEPENDENCIES:
+  - CalendarHeatmap (from `../`)
+
+EXTERNAL SOURCES:
+  CalendarHeatmap:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  CalendarHeatmap: 0c00f42db38cc33293fc47eb3872b20937a0efbd
+
+PODFILE CHECKSUM: c02b6bd2f38a1c9901e22b19e74db840e042bffc
+
+COCOAPODS: 1.8.4

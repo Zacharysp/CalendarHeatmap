@@ -1,0 +1,22 @@
+{
+  "name": "CalendarHeatmap",
+  "version": "0.1.0",
+  "summary": "A short description of CalendarHeatmap.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Zacharysp/CalendarHeatmap",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Zacharysp": "sp151018@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/Zacharysp/CalendarHeatmap.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "CalendarHeatmap/Classes/**/*"
+}
