@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'CalendarHeatmap_Example' do
+  pod 'CalendarHeatmap', :path => '../'
+
+  target 'CalendarHeatmap_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
