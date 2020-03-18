@@ -10,24 +10,33 @@ import UIKit
 
 open class CalendarHeatmapCell: UICollectionViewCell {
     
+    open var config: CalendarHeatmapConfig! {
+        didSet {
+            backgroundColor = config.backgroundColor
+        }
+    }
+    
     open var itemColor: UIColor = .clear {
         didSet {
             setNeedsDisplay()
         }
     }
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        isUserInteractionEnabled = false
+    open override var isSelected: Bool {
+        didSet {
+            setNeedsDisplay()
+        }
     }
     
     open override func draw(_ rect: CGRect) {
-        let path = UIBezierPath(roundedRect: rect, cornerRadius: min(bounds.width, bounds.height) * 0.2)
+        let cornerRadius = config.itemCornerRadius
+        let maxCornerRadius = min(bounds.width, bounds.height) * 0.5
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: min(cornerRadius, maxCornerRadius))
         itemColor.setFill()
         path.fill()
-    }
-    
-    public required init?(coder: NSCoder) {
-        fatalError("no storyboard implementation, should not enter here")
+        guard isSelected, config.allowItemSelection else { return }
+        config.selectedItemBorderColor.setStroke()
+        path.lineWidth = config.selectedItemBorderLineWidth
+        path.stroke()
     }
 }

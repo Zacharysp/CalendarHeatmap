@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     lazy var data: [String: UIColor] = {
         guard let data = readHeatmap() else { return [:] }
         return data.mapValues { (colorIndex) -> UIColor in
-            print(colorIndex)
             switch colorIndex {
             case 0:
                 return UIColor(named: "color1")!
@@ -37,6 +36,9 @@ class ViewController: UIViewController {
         
         var config = CalendarHeatmapConfig()
         config.backgroundColor = UIColor(named: "background")!
+        // config item
+        config.selectedItemBorderColor = .white
+        config.allowItemSelection = true
         // config month header
         config.monthHeight = 30
         config.monthStrings = DateFormatter().shortMonthSymbols
@@ -68,6 +70,14 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: CalendarHeatmapDelegate {
+    func didSelectedAt(dateComponents: DateComponents) {
+        guard let year = dateComponents.year,
+        let month = dateComponents.month,
+        let day = dateComponents.day else { return }
+        // do something here
+        print(year, month, day)
+    }
+    
     func colorFor(dateComponents: DateComponents) -> UIColor {
         guard let year = dateComponents.year,
             let month = dateComponents.month,
@@ -75,6 +85,7 @@ extension ViewController: CalendarHeatmapDelegate {
         let dateString = "\(year).\(month).\(day)"
         return data[dateString] ?? UIColor(named: "color6")!
     }
+    
 }
 
 extension Date {
