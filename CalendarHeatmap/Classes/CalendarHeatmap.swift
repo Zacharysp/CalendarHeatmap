@@ -8,8 +8,9 @@
 
 import UIKit
 
-public protocol CalendarHeatmapDelegate: class {
+@objc public protocol CalendarHeatmapDelegate: class {
     func colorFor(dateComponents: DateComponents) -> UIColor
+    @objc optional func didSelectedAt(dateComponents: DateComponents)
 }
 
 open class CalendarHeatmap: UIView {
@@ -67,7 +68,11 @@ open class CalendarHeatmap: UIView {
             // calculate calendar date in background
             self.calendarData.setupCalendar()
             self.addHeaderLabel(headers: self.calendarData.headerData)
-            self.scrollToEnd()
+            DispatchQueue.main.async { [weak self] in
+                // then reload
+                self?.collectionView.reloadData()
+                self?.scrollToEnd()
+            }
         }
     }
     
@@ -138,7 +143,7 @@ extension CalendarHeatmap: UICollectionViewDelegate, UICollectionViewDataSource 
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CalendarHeatmapCell
-        cell.backgroundColor = config.backgroundColor
+        cell.config = config
         if let date = calendarData.itemAt(indexPath: indexPath),
             let itemColor = delegate?.colorFor(dateComponents: Calendar.current.dateComponents([.year, .month, .day], from: date)) {
             cell.itemColor = itemColor
@@ -146,5 +151,10 @@ extension CalendarHeatmap: UICollectionViewDelegate, UICollectionViewDataSource 
             cell.itemColor = .clear
         }
         return cell
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let date = calendarData.itemAt(indexPath: indexPath) else { return }
+        delegate?.didSelectedAt?(dateComponents: Calendar.current.dateComponents([.year, .month, .day], from: date))
     }
 }

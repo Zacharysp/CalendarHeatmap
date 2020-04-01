@@ -77,7 +77,8 @@ let calendarHeatmap = CalendarHeatmap(config: config, startDate: Date())
 
 Make your `ViewController` adopts `CalendarHeatmapDelegate`
 
-```swift
+```swift 
+// color for date
 func colorFor(dateComponents: DateComponents) -> UIColor {
     guard let year = dateComponents.year,
         let month = dateComponents.month,
@@ -85,6 +86,14 @@ func colorFor(dateComponents: DateComponents) -> UIColor {
     // manage your color based on date here
     let yourColor = {...}
     return yourColor
+}
+
+// selection at date
+func didSelectedAt(dateComponents: DateComponents) {
+    guard let year = dateComponents.year,
+    let month = dateComponents.month,
+    let day = dateComponents.day else { return }
+    // do something here
 }
 ```
 
