@@ -68,7 +68,11 @@ open class CalendarHeatmap: UIView {
             // calculate calendar date in background
             self.calendarData.setupCalendar()
             self.addHeaderLabel(headers: self.calendarData.headerData)
-            self.scrollToEnd()
+            DispatchQueue.main.async { [weak self] in
+                // then reload
+                self?.collectionView.reloadData()
+                self?.scrollToEnd()
+            }
         }
     }
     
