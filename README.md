@@ -61,7 +61,7 @@ let calendarHeatmap = CalendarHeatmap(config: config, startDate: Date())
 let calendarHeatmap = CalendarHeatmap(startDate: ...)
 calendarHeatmap.reload()
 // reload with new range of date.
-calendar.reload(newStartDate: ..., newEndDate: ...)
+calendarHeatmap.reload(newStartDate: ..., newEndDate: ...)
 ```
 
 `CalendarHeatmapConfig` details.
@@ -78,14 +78,23 @@ calendar.reload(newStartDate: ..., newEndDate: ...)
 | weekDayStrings    | [String] | `DateFormatter().shortWeekdaySymbols.map{ \$0.capitalized }` |
 | weekDayFont       |  UIFont  | `UIFont.systemFont(ofSize: 12, weight: .medium)`             |
 | weekDayWidth      | CGFloat  | 30                                                           |
+| weekDayStandard   |   Enum   | `USandCanada`                                                |
 | monthColor        | UIColor  | `UIColor.black`                                              |
 | monthStrings      | [String] | `DateFormatter().monthSymbols`                               |
 | monthFont         |  UIFont  | `UIFont.systemFont(ofSize: 12, weight: .medium)`             |
 | monthHeight       | CGFloat  | 20                                                           |
 
+Starts Monday or Sunday.
+
+```swift
+var config = CalendarHeatmapConfig()
+config.weekDayStandard = .USandCanada // starts Sunday. (default)
+config.weekDayStandard = .International // starts Monday
+```
+
 Make your `ViewController` adopts `CalendarHeatmapDelegate`
 
-```swift 
+```swift
 // color for date
 func colorFor(dateComponents: DateComponents) -> UIColor {
     guard let year = dateComponents.year,

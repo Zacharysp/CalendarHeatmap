@@ -31,9 +31,15 @@ class WeekDayView: UIView {
             stackView.heightAnchor.constraint(equalToConstant: config.itemSide * 7 + config.interitemSpacing * 6),
         ])
         
+        var weekDayStrings = config.weekDayStrings
+        // modify week day strong order based on calendar standard
+        if config.weekDayStandard == .International {
+            weekDayStrings.append(weekDayStrings.remove(at: 0))
+        }
+        
         for index in 0...6 {
             let label = UILabel()
-            label.text = config.weekDayStrings[index]
+            label.text = weekDayStrings[index]
             label.textColor = config.weekDayColor
             label.font = config.weekDayFont
             label.backgroundColor = config.backgroundColor

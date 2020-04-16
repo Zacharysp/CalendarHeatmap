@@ -8,6 +8,11 @@
 
 import UIKit
 
+public enum WeekDayStandard {
+    case International // starts monday
+    case USandCanada // starts sunday
+}
+
 public struct CalendarHeatmapConfig {
     public var backgroundColor: UIColor = .white
     public var contentRightInset: CGFloat = 60
@@ -26,6 +31,7 @@ public struct CalendarHeatmapConfig {
     public var weekDayStrings: [String] = DateFormatter().shortWeekdaySymbols.map{ $0.capitalized }
     public var weekDayFont: UIFont = UIFont.systemFont(ofSize: 12, weight: .medium)
     public var weekDayWidth: CGFloat = 30
+    public var weekDayStandard = WeekDayStandard.USandCanada
     
     // calendar month header
     public var monthColor: UIColor = .black
