@@ -22,8 +22,7 @@ struct CalendarHeatmapData {
     
     // calculate header width related.
     private(set) var headerData = [(month: Int, width: CGFloat)]()
-    private let itemSide: CGFloat
-    private let lineSpacing: CGFloat
+    private let config: CalendarHeatmapConfig
     // count column for each section, and count item in each column.
     // these two variables are used for calculate the width of each month header.
     private var columnCountInSection: Int = 0
@@ -38,8 +37,7 @@ struct CalendarHeatmapData {
     }
     
     init(config: CalendarHeatmapConfig, startDate: Date, endDate: Date) {
-        self.itemSide = config.itemSide
-        self.lineSpacing = config.lineSpacing
+        self.config = config
         
         // initial calculating variables.
         self.startDate = startDate
@@ -94,7 +92,7 @@ struct CalendarHeatmapData {
         // append the last month section.
         itemsInSection.append(currentMonthDates)
         // use max width for the last momth header
-        headerData.append((currentMonth, (itemSide + lineSpacing) * 5))
+        headerData.append((currentMonth, (config.itemSide + config.lineSpacing) * 5))
     }
     
     // MARK: setup header related functions
@@ -103,7 +101,7 @@ struct CalendarHeatmapData {
         // if the current item is the first on in column, it belongs to the next month
         // otherwirs, it belongs to this month
         let sectionColumnCount = itemCount == 1 ? (columnCount - 1) : columnCount
-        return CGFloat(sectionColumnCount) * (itemSide + lineSpacing)
+        return CGFloat(sectionColumnCount) * (config.itemSide + config.lineSpacing)
     }
     
     private func addOneItemCount(itemCount: inout Int, columnCount: inout Int) {
@@ -120,7 +118,12 @@ struct CalendarHeatmapData {
     private mutating func fillLeadingEmptyDaysBefore(date: Date) -> [Date?] {
         // fill the leading empty day with nil date.
         // in calendar, if the item date is nil, fill the item with clear background color
-        let weekDay = Calendar.current.component(.weekday, from: date)
+        
+        var weekDay = Calendar.current.component(.weekday, from: date) - (config.weekDayStandard == .International ? 1 : 0)
+        if weekDay == 0 {
+            // set sunday as 7 in internation standard
+            weekDay = 7
+        }
         // add count of the items in column
         itemCountInColumn = weekDay
         columnCountInSection += 1
