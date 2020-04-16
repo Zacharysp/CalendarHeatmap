@@ -1,5 +1,5 @@
 //
-//  DateExtensions.swift
+//  Extensions.swift
 //  CalenderHeatmapDemo
 //
 //  Created by Dongjie Zhang on 2/27/20.
@@ -31,5 +31,20 @@ extension Date {
         let dateComponents = DateComponents(year: calendar.component(.year, from: self), month: calendar.component(.month, from: self))
         let date = calendar.date(from: dateComponents)!
         return calendar.range(of: .day, in: .month, for: date)!.count
+    }
+}
+
+// https://gist.github.com/yasirmturk/0b47d18a30722902a9a4aaad05d1794a
+extension UIStackView {
+    @discardableResult
+    func removeAllArrangedSubviews() -> [UIView] {
+        return arrangedSubviews.reduce([UIView]()) { $0 + [removeArrangedSubViewProperly($1)] }
+    }
+
+    func removeArrangedSubViewProperly(_ view: UIView) -> UIView {
+        removeArrangedSubview(view)
+        NSLayoutConstraint.deactivate(view.constraints)
+        view.removeFromSuperview()
+        return view
     }
 }

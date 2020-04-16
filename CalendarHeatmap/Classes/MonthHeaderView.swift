@@ -22,7 +22,17 @@ class MonthHeaderView: UIStackView {
         spacing = 0
     }
     
-    func append(text: String, width: CGFloat) {
+    func build(headers: [(month: Int, width: CGFloat)]) {
+        DispatchQueue.main.async {
+            self.removeAllArrangedSubviews()
+            for header in headers {
+                let monthText = self.config.monthStrings[header.month - 1]
+                self.append(text: monthText, width: header.width)
+            }
+        }
+    }
+    
+    private func append(text: String, width: CGFloat) {
         let label = UILabel()
         label.font = config.monthFont
         label.text = text

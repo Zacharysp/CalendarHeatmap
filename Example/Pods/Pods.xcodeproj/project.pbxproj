@@ -16,7 +16,7 @@
 		44F804C805CF509548CF427D001C0004 /* Pods-CalendarHeatmap_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E3B191448C4CD59EC2A9F58FB9E83C /* Pods-CalendarHeatmap_Tests-dummy.m */; };
 		4F3D3B33D7139CE1C2E51E216F31FE3A /* Pods-CalendarHeatmap_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D0264C03B4D7011179BA695AF7BAADB /* Pods-CalendarHeatmap_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6B33801240E4577004D1F36 /* CalendarHeatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B337FA240E4577004D1F36 /* CalendarHeatmap.swift */; };
-		B6B33802240E4577004D1F36 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B337FB240E4577004D1F36 /* DateExtensions.swift */; };
+		B6B33802240E4577004D1F36 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B337FB240E4577004D1F36 /* Extensions.swift */; };
 		B6B33803240E4577004D1F36 /* WeekDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B337FC240E4577004D1F36 /* WeekDayView.swift */; };
 		B6B33804240E4577004D1F36 /* MonthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B337FD240E4577004D1F36 /* MonthHeaderView.swift */; };
 		B6B33805240E4577004D1F36 /* CalendarHeatmapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B337FE240E4577004D1F36 /* CalendarHeatmapConfig.swift */; };
@@ -70,7 +70,7 @@
 		B1E3B191448C4CD59EC2A9F58FB9E83C /* Pods-CalendarHeatmap_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CalendarHeatmap_Tests-dummy.m"; sourceTree = "<group>"; };
 		B2E2AFF5102130F1B8527DCF0DDA6AEF /* Pods-CalendarHeatmap_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CalendarHeatmap_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B6B337FA240E4577004D1F36 /* CalendarHeatmap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarHeatmap.swift; path = CalendarHeatmap/Classes/CalendarHeatmap.swift; sourceTree = "<group>"; };
-		B6B337FB240E4577004D1F36 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateExtensions.swift; path = CalendarHeatmap/Classes/DateExtensions.swift; sourceTree = "<group>"; };
+		B6B337FB240E4577004D1F36 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = CalendarHeatmap/Classes/Extensions.swift; sourceTree = "<group>"; };
 		B6B337FC240E4577004D1F36 /* WeekDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeekDayView.swift; path = CalendarHeatmap/Classes/WeekDayView.swift; sourceTree = "<group>"; };
 		B6B337FD240E4577004D1F36 /* MonthHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonthHeaderView.swift; path = CalendarHeatmap/Classes/MonthHeaderView.swift; sourceTree = "<group>"; };
 		B6B337FE240E4577004D1F36 /* CalendarHeatmapConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarHeatmapConfig.swift; path = CalendarHeatmap/Classes/CalendarHeatmapConfig.swift; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 				B6B33800240E4577004D1F36 /* CalendarHeatmapCell.swift */,
 				B6B337FE240E4577004D1F36 /* CalendarHeatmapConfig.swift */,
 				B6B337FF240E4577004D1F36 /* CalendarHeatmapData.swift */,
-				B6B337FB240E4577004D1F36 /* DateExtensions.swift */,
+				B6B337FB240E4577004D1F36 /* Extensions.swift */,
 				B6B337FD240E4577004D1F36 /* MonthHeaderView.swift */,
 				B6B337FC240E4577004D1F36 /* WeekDayView.swift */,
 			);
@@ -401,7 +401,7 @@
 				B6B33805240E4577004D1F36 /* CalendarHeatmapConfig.swift in Sources */,
 				FAEE230174ABCEF3F9161DE0823D81F0 /* CalendarHeatmap-dummy.m in Sources */,
 				B6B33806240E4577004D1F36 /* CalendarHeatmapData.swift in Sources */,
-				B6B33802240E4577004D1F36 /* DateExtensions.swift in Sources */,
+				B6B33802240E4577004D1F36 /* Extensions.swift in Sources */,
 				B6B33807240E4577004D1F36 /* CalendarHeatmapCell.swift in Sources */,
 				B6B33804240E4577004D1F36 /* MonthHeaderView.swift in Sources */,
 			);

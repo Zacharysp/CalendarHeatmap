@@ -56,6 +56,14 @@ let config = CalendarHeatmapConfig()
 let calendarHeatmap = CalendarHeatmap(config: config, startDate: Date())
 ```
 
+```swift
+// reload the heatmap
+let calendarHeatmap = CalendarHeatmap(startDate: ...)
+calendarHeatmap.reload()
+// reload with new range of date.
+calendar.reload(newStartDate: ..., newEndDate: ...)
+```
+
 `CalendarHeatmapConfig` details.
 
 | Config Key        |   Type   | Default                                                      |
