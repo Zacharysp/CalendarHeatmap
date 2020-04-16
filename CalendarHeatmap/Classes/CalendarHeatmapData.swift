@@ -50,6 +50,8 @@ struct CalendarHeatmapData {
         
         // initial item count based on the weekday of the first date
         itemCountInColumn = Calendar.current.component(.weekday, from: startDate)
+        
+        setupCalendar()
     }
     
     func itemCountIn(section: Int) -> Int? {
@@ -61,7 +63,7 @@ struct CalendarHeatmapData {
         return itemsInSection[indexPath.section][indexPath.item]
     }
     
-    mutating func setupCalendar() {
+    private mutating func setupCalendar() {
         // cache for date of current month.
         var currentMonthDates = fillLeadingEmptyDaysBefore(date: startDate)
         // loop all days.

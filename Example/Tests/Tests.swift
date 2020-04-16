@@ -1,28 +1,27 @@
 import XCTest
-import CalendarHeatmap
+@testable import CalendarHeatmap
 
 class Tests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    private let startDate = Date(2020, 3, 1)
+    private let endDate = Date(2020, 4, 10)
+    private lazy var heatmapData: CalendarHeatmapData = {
+        return CalendarHeatmapData(config: CalendarHeatmapConfig(), startDate: startDate, endDate: endDate)
+    } ()
+    
+    func testCalendarSectionCount() {
+        XCTAssertEqual(heatmapData.sectionCount, 2)
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testCalendarItemCount() {
+        XCTAssertEqual(heatmapData.itemCountIn(section: 0), 35)
+        XCTAssertEqual(heatmapData.itemCountIn(section: 1), 6)
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+    func testCalendarDataItem() {
+        let firstDate = Date(2020, 3, 1)
+        XCTAssertEqual(heatmapData.itemAt(indexPath: IndexPath(item: 0, section: 0)), firstDate)
+        let lastDate = Date(2020, 4, 10)
+        XCTAssertEqual(heatmapData.itemAt(indexPath: IndexPath(item: 5, section: 1)), lastDate)
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure() {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }

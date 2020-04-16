@@ -49,12 +49,10 @@ open class CalendarHeatmap: UIView {
     
     private let cellId = "CalendarHeatmapCellId"
     private let config: CalendarHeatmapConfig
-    private let startDate: Date
-    private let endDate: Date
+    private var startDate: Date
+    private var endDate: Date
     
-    private lazy var calendarData: CalendarHeatmapData = {
-        return CalendarHeatmapData(config: config, startDate: startDate.startOfMonth(), endDate: endDate)
-    }()
+    private var calendarData: CalendarHeatmapData?
     
     open weak var delegate: CalendarHeatmapDelegate?
     
@@ -64,21 +62,41 @@ open class CalendarHeatmap: UIView {
         self.endDate = endDate
         super.init(frame: .zero)
         render()
+        setup { [weak self] in self?.scrollToEnd() }
+    }
+    
+    public func reload() {
+        collectionView.reloadData()
+    }
+    
+    public func reload(newStartDate: Date?, newEndDate: Date?) {
+        guard newStartDate != nil || newEndDate != nil else {
+            reload()
+            return
+        }
+        startDate = newStartDate ?? startDate
+        endDate = newEndDate ?? endDate
+        setup {}
+    }
+    
+    private func setup(completion: @escaping () -> Void) {
+        backgroundColor = config.backgroundColor
         DispatchQueue.global(qos: .userInteractive).async {
             // calculate calendar date in background
-            self.calendarData.setupCalendar()
-            self.addHeaderLabel(headers: self.calendarData.headerData)
+            self.calendarData = CalendarHeatmapData(config: self.config,
+                                                    startDate: self.startDate.startOfMonth(),
+                                                    endDate: self.endDate)
+            self.monthHeaderView.build(headers: self.calendarData!.headerData)
             DispatchQueue.main.async { [weak self] in
                 // then reload
                 self?.collectionView.reloadData()
-                self?.scrollToEnd()
+                completion()
             }
         }
     }
     
     private func render() {
         clipsToBounds = true
-        backgroundColor = config.backgroundColor
         
         addSubview(collectionView)
         addSubview(weekDayView)
@@ -106,21 +124,13 @@ open class CalendarHeatmap: UIView {
         bottomConstraint.isActive = true
     }
     
-    private func addHeaderLabel(headers: [(month: Int, width: CGFloat)]) {
-        DispatchQueue.main.async {
-            for header in headers {
-                let monthText = self.config.monthStrings[header.month - 1]
-                self.monthHeaderView.append(text: monthText, width: header.width)
-            }
-        }
-    }
-    
     private func scrollToEnd() {
         // scroll to end
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
-            let lastSection = strongSelf.calendarData.sectionCount - 1
-            guard let lastItemIndex = strongSelf.calendarData.itemCountIn(section: lastSection) else { return }
+            guard let sectionCount = strongSelf.calendarData?.sectionCount else { return }
+            let lastSection = sectionCount - 1
+            guard let lastItemIndex = strongSelf.calendarData?.itemCountIn(section: lastSection) else { return }
             let indexPath = IndexPath(item: lastItemIndex - 1, section: lastSection)
             strongSelf.collectionView.scrollToItem(at: indexPath, at: .right, animated: false)
         }
@@ -134,17 +144,17 @@ open class CalendarHeatmap: UIView {
 extension CalendarHeatmap: UICollectionViewDelegate, UICollectionViewDataSource {
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return calendarData.sectionCount
+        return calendarData?.sectionCount ?? 0
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return calendarData.itemCountIn(section: section) ?? 0
+        return calendarData?.itemCountIn(section: section) ?? 0
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CalendarHeatmapCell
         cell.config = config
-        if let date = calendarData.itemAt(indexPath: indexPath),
+        if let date = calendarData?.itemAt(indexPath: indexPath),
             let itemColor = delegate?.colorFor(dateComponents: Calendar.current.dateComponents([.year, .month, .day], from: date)) {
             cell.itemColor = itemColor
         } else {
@@ -154,7 +164,7 @@ extension CalendarHeatmap: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let date = calendarData.itemAt(indexPath: indexPath) else { return }
+        guard let date = calendarData?.itemAt(indexPath: indexPath) else { return }
         delegate?.didSelectedAt?(dateComponents: Calendar.current.dateComponents([.year, .month, .day], from: date))
     }
 }
