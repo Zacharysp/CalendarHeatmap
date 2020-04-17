@@ -11,6 +11,7 @@ import UIKit
 @objc public protocol CalendarHeatmapDelegate: class {
     func colorFor(dateComponents: DateComponents) -> UIColor
     @objc optional func didSelectedAt(dateComponents: DateComponents)
+    @objc optional func finishLoadCalendar()
 }
 
 open class CalendarHeatmap: UIView {
@@ -62,7 +63,7 @@ open class CalendarHeatmap: UIView {
         self.endDate = endDate
         super.init(frame: .zero)
         render()
-        setup { [weak self] in self?.scrollToEnd() }
+        setup()
     }
     
     public func reload() {
@@ -76,10 +77,15 @@ open class CalendarHeatmap: UIView {
         }
         startDate = newStartDate ?? startDate
         endDate = newEndDate ?? endDate
-        setup {}
+        setup()
     }
     
-    private func setup(completion: @escaping () -> Void) {
+    public func scrollTo(date: Date, at: UICollectionView.ScrollPosition, animated: Bool) {
+        let difference = Date.daysBetween(start: startDate, end: date)
+        collectionView.scrollToItem(at: IndexPath(item: difference - 1, section: 0), at: at, animated: animated)
+    }
+    
+    private func setup() {
         backgroundColor = config.backgroundColor
         DispatchQueue.global(qos: .userInteractive).async {
             // calculate calendar date in background
@@ -90,7 +96,7 @@ open class CalendarHeatmap: UIView {
             DispatchQueue.main.async { [weak self] in
                 // then reload
                 self?.collectionView.reloadData()
-                completion()
+                self?.delegate?.finishLoadCalendar?()
             }
         }
     }
@@ -124,18 +130,6 @@ open class CalendarHeatmap: UIView {
         bottomConstraint.isActive = true
     }
     
-    private func scrollToEnd() {
-        // scroll to end
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            guard let sectionCount = strongSelf.calendarData?.sectionCount else { return }
-            let lastSection = sectionCount - 1
-            guard let lastItemIndex = strongSelf.calendarData?.itemCountIn(section: lastSection) else { return }
-            let indexPath = IndexPath(item: lastItemIndex - 1, section: lastSection)
-            strongSelf.collectionView.scrollToItem(at: indexPath, at: .right, animated: false)
-        }
-    }
-    
     public required init?(coder: NSCoder) {
         fatalError("no storyboard implementation, should not enter here")
     }
@@ -143,12 +137,8 @@ open class CalendarHeatmap: UIView {
 
 extension CalendarHeatmap: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return calendarData?.sectionCount ?? 0
-    }
-    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return calendarData?.itemCountIn(section: section) ?? 0
+        return calendarData?.daysCount ?? 0
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

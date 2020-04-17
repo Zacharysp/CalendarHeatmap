@@ -92,6 +92,11 @@ config.weekDayStandard = .USandCanada // starts Sunday. (default)
 config.weekDayStandard = .International // starts Monday
 ```
 
+Scroll the calendar programmatically
+```swift
+calendarHeatMap.scrollTo(date: Date(...), at: .right, animated: false)
+```
+
 Make your `ViewController` adopts `CalendarHeatmapDelegate`
 
 ```swift
@@ -105,11 +110,16 @@ func colorFor(dateComponents: DateComponents) -> UIColor {
     return yourColor
 }
 
-// selection at date
+// (optional) selection at date
 func didSelectedAt(dateComponents: DateComponents) {
     guard let year = dateComponents.year,
     let month = dateComponents.month,
     let day = dateComponents.day else { return }
+    // do something here
+}
+
+// (optional) notify finish loading the calendar
+func finishLoadCalendar() {
     // do something here
 }
 ```

@@ -10,12 +10,12 @@ import Foundation
 
 extension Date {
     
-    init(_ year:Int, _ month: Int, _ day: Int) {
+    static func dateOf(_ year:Int, _ month: Int, _ day: Int) -> Date? {
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month
         dateComponents.day = day
-        self.init(timeInterval:0, since: Calendar.current.date(from: dateComponents)!)
+        return Calendar.current.date(from: dateComponents)
     }
     
     static func daysBetween(start: Date, end: Date) -> Int {

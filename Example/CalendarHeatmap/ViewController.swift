@@ -29,11 +29,7 @@ class ViewController: UIViewController {
         }
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = UIColor(named: "background")
-        
+    lazy var calendarHeatMap: CalendarHeatmap = {
         var config = CalendarHeatmapConfig()
         config.backgroundColor = UIColor(named: "background")!
         // config item
@@ -51,14 +47,21 @@ class ViewController: UIViewController {
         
         let calendar = CalendarHeatmap(config: config, startDate: Date(2019, 5, 1), endDate: Date(2020, 3, 23))
         calendar.delegate = self
+        return calendar
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        view.addSubview(calendar)
-        calendar.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: "background")
+        
+        view.addSubview(calendarHeatMap)
+        calendarHeatMap.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            calendar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 6),
-            calendar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 6),
-            calendar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
+            calendarHeatMap.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 6),
+            calendarHeatMap.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 6),
+            calendarHeatMap.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
         ])
     }
     
@@ -72,8 +75,8 @@ class ViewController: UIViewController {
 extension ViewController: CalendarHeatmapDelegate {
     func didSelectedAt(dateComponents: DateComponents) {
         guard let year = dateComponents.year,
-        let month = dateComponents.month,
-        let day = dateComponents.day else { return }
+            let month = dateComponents.month,
+            let day = dateComponents.day else { return }
         // do something here
         print(year, month, day)
     }
@@ -86,10 +89,12 @@ extension ViewController: CalendarHeatmapDelegate {
         return data[dateString] ?? UIColor(named: "color6")!
     }
     
+    func finishLoadCalendar() {
+        calendarHeatMap.scrollTo(date: Date(2020, 3, 23), at: .right, animated: false)
+    }
 }
 
 extension Date {
-    
     init(_ year:Int, _ month: Int, _ day: Int) {
         var dateComponents = DateComponents()
         dateComponents.year = year
