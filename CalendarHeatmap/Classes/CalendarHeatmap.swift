@@ -84,7 +84,7 @@ open class CalendarHeatmap: UIView {
         DispatchQueue.global(qos: .userInteractive).async {
             // calculate calendar date in background
             self.calendarData = CalendarHeatmapData(config: self.config,
-                                                    startDate: self.startDate.startOfMonth(),
+                                                    startDate: self.startDate,
                                                     endDate: self.endDate)
             self.monthHeaderView.build(headers: self.calendarData!.headerData)
             DispatchQueue.main.async { [weak self] in

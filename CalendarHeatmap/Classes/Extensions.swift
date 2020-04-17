@@ -22,10 +22,6 @@ extension Date {
         return Calendar.current.dateComponents([.day], from: start, to: end).day ?? 0
     }
     
-    func startOfMonth() -> Date {
-        return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
-    }
-    
     func daysInMonth() -> Int {
         let calendar = Calendar.current
         let dateComponents = DateComponents(year: calendar.component(.year, from: self), month: calendar.component(.month, from: self))
