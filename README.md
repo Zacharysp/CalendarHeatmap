@@ -42,9 +42,7 @@ view.addSubview(calendarHeatmap)
 // provide a range of date.
 let formatter = DateFormatter()
 formatter.dateFormat = "yyyy-MM-dd"
-// calendar will display the whole month of the start date.
 let startDate = formatter.date(from: "2019-10-18")
-// the end date is the last day in the calendar
 let endDate = formatter.date(from: "2020-02-14")
 // default endDate is now.
 let calendarHeatmap = CalendarHeatmap(startDate: startDate, endDate: endDate)
