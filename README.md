@@ -22,11 +22,14 @@ it, simply add the following line to your Podfile:
 pod 'CalendarHeatmap'
 ```
 
-CalendarHeatmap is also availabel through Carthage, by adding it to your Cartfile:
+CalendarHeatmap is also availabele through Carthage, by adding it to your Cartfile:
 
 ```ruby
 github "Zacharysp/CalendarHeatmap"
 ```
+
+And finally CalendarHeatmap can also be installed using the Swift Package Manager:
+
 
 ## Usage
 
