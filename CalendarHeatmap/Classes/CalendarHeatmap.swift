@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc public protocol CalendarHeatmapDelegate: class {
+@objc public protocol CalendarHeatmapDelegate {
     func colorFor(dateComponents: DateComponents) -> UIColor
     @objc optional func didSelectedAt(dateComponents: DateComponents)
     @objc optional func finishLoadCalendar()
